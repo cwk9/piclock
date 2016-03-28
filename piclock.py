@@ -19,10 +19,10 @@ class Alarm:
 #        self._value = v
 
    def totalAlarms(self):
-     print Alarm.alarmcount
+     print(Alarm.alarmcount)
 
    def displayAlarm(self):
-      print "Time : ", self.alarmtime,  ", Date: ", self.alarmdate,  ", Repeat: ", self.alarmrepeat,  ", Length: ", self.alarmlength
+      print("Time : ", self.alarmtime,  ", Date: ", self.alarmdate,  ", Repeat: ", self.alarmrepeat,  ", Length: ", self.alarmlength)
 
 newalarm = Alarm("14:00", "Feb 30", "False", "60")
 newalarm2 = Alarm("17:32", "Feb 03", "True", "60")
