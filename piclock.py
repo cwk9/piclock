@@ -1,30 +1,49 @@
-import time
 import datetime
 import threading
+import sys
 
-class Alarm:
-   'Common base class for all alarms'
-   alarmcount = 0
-   def __init__(self, alarmtime, alarmdate, alarmrepeat, alarmlength):
-      self.alarmtime = alarmtime
-      self.alarmdate = alarmdate
-      self.alarmrepeat = alarmrepeat
-      self.alarmlength = alarmlength
-      Alarm.alarmcount += 1
+def ring_ring():
+    sys.stdout.write('ring ring\n')
+    sys.stdout.flush()
 
-#    @alarmrepeat.setter
-#    def value(self, v):
-#        if not (): raise Exception("Value must be daily, weekdays")
-#        self._value = v
+class Clock:
 
-   def totalAlarms(self):
-     print(Alarm.alarmcount)
+    def __init__(self):
+        self.alarm_time = None
+        self._alarm_thread = None
+        self.update_interval = 1
+        self.event = threading.Event()
 
-   def displayAlarm(self):
-      print("Time : ", self.alarmtime,  ", Date: ", self.alarmdate,  ", Repeat: ", self.alarmrepeat,  ", Length: ", self.alarmlength)
+    def run(self):
+        while True:
+            self.event.wait(self.update_interval)
+            if self.event.isSet():
+                break
+            now = datetime.datetime.now()
+            if self._alarm_thread and self._alarm_thread.is_alive():
+                alarm_symbol = '+'
+            else:
+                alarm_symbol = ' '
+            sys.stdout.write("\r%02d:%02d:%02d %s"
+                % (now.hour, now.minute, now.second, alarm_symbol))
+            #sys.stdout.flush()
 
-newalarm = Alarm("14:00", "Feb 30", "False", "60")
-newalarm2 = Alarm("17:32", "Feb 03", "True", "60")
+    def set_alarm(self, hour, minute):
+        now = datetime.datetime.now()
+        alarm = now.replace(hour=int(hour), minute=int(minute))
+        delta = int((alarm - now).total_seconds())
+        if delta <= 0:
+            alarm = alarm.replace(day=alarm.day + 1)
+            delta = int((alarm - now).total_seconds())
+        if self._alarm_thread:
+            self._alarm_thread.cancel()
+        self._alarm_thread = threading.Timer(delta, ring_ring)
+        self._alarm_thread.daemon = True
+        self._alarm_thread.start()
 
-newalarm.displayAlarm()
-newalarm2.displayAlarm()
+clock = Clock()
+clock2 = Clock()
+clock.set_alarm(sys.argv[1], sys.argv[2])
+clock2.set_alarm(sys.argv[3], sys.argv[4])
+clock.run()
+clock2.run()
