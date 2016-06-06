@@ -1,7 +1,10 @@
+#Alarm clock for raspberry pi using serial display and a single switch.
+
 import datetime
 import threading
 import sys
 import configparser
+#pydub needs to be installed not in standard library.
 from pydub import AudioSegment
 from pydub.playback import play
 
@@ -9,15 +12,17 @@ from pydub.playback import play
 config = configparser.ConfigParser()
 config.read('pyclock.conf')
 
-#Load alarm wave soudn
+#Load alarm wave sound
 wavname = "alarm.wav"
 alarmwav = AudioSegment.from_wav(config['ALARMWAVS']['alwav'])
 
+#What we do when an alarm is triggered
 def ring_ring():
     sys.stdout.write('ring ring\n')
     play(alarmwav)
     sys.stdout.flush()
 
+#Create an alarm clock object for every alarm in the config file.
 def createclocks():
     # Create our clock objects
     clocks = [Clock() for i in range(len(config.items('ALARMS')))]
@@ -28,6 +33,7 @@ def createclocks():
         alcount = alcount + 1
         cl.run()
 
+#Our clock object. The core of the program.
 class Clock:
 
     def __init__(self):
@@ -62,6 +68,5 @@ class Clock:
         self._alarm_thread = threading.Timer(delta, ring_ring)
         self._alarm_thread.daemon = True
         self._alarm_thread.start()
-
 
 createclocks()
