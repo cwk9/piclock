@@ -18,6 +18,16 @@ def ring_ring():
     play(alarmwav)
     sys.stdout.flush()
 
+def createclocks():
+    # Create our clock objects
+    clocks = [Clock() for i in range(len(config.items('ALARMS')))]
+    # Set the alarm and start the clock.
+    alcount = 0
+    for cl in clocks:
+        cl.set_alarm(config['ALARMS'][str(alcount)].split(":")[0], config['ALARMS'][str(alcount)].split(":")[1])
+        alcount = alcount + 1
+        cl.run()
+
 class Clock:
 
     def __init__(self):
@@ -53,11 +63,5 @@ class Clock:
         self._alarm_thread.daemon = True
         self._alarm_thread.start()
 
-#Create our clock objects
-clocks = [ Clock() for i in range(len(config.items('ALARMS')))]
 
-alcount = 0
-for cl in clocks:
-    cl.set_alarm(config['ALARMS'][str(alcount)].split(":")[0],config['ALARMS'][str(alcount)].split(":")[1])
-    alcount = alcount + 1
-    cl.run()
+createclocks()
