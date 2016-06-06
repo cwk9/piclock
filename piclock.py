@@ -57,7 +57,7 @@ class Clock:
 #clock1 = Clock()
 #clock2 = Clock()
 
-clocks = [ Clock() for i in range(len(config.itmes('ALARMS')))]
+clocks = [ Clock() for i in range(len(config.items('ALARMS')))]
 
 #command line args for testing.
 #clock1.set_alarm(sys.argv[1], sys.argv[2])
