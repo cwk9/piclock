@@ -5,7 +5,7 @@ import configparser
 
 #Read config file
 config = configparser.ConfigParser()
-config.read('example.ini')
+config.read('pyclock.conf')
 
 def ring_ring():
     sys.stdout.write('ring ring\n')
