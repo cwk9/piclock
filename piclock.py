@@ -1,6 +1,11 @@
 import datetime
 import threading
 import sys
+import configparser
+
+#Read config file
+config = configparser.ConfigParser()
+config.read('example.ini')
 
 def ring_ring():
     sys.stdout.write('ring ring\n')
@@ -41,9 +46,14 @@ class Clock:
         self._alarm_thread.daemon = True
         self._alarm_thread.start()
 
-clock = Clock()
+clock1 = Clock()
 clock2 = Clock()
-clock.set_alarm(sys.argv[1], sys.argv[2])
+
+clock1.set_alarm(sys.argv[1], sys.argv[2])
 clock2.set_alarm(sys.argv[3], sys.argv[4])
-clock.run()
+
+#clock1.set_alarm(config['ALARMS']['alarm1'])
+print ((config['ALARMS']['alarm1']).split(":"))
+
+clock1.run()
 clock2.run()
