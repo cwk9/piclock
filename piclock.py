@@ -57,7 +57,7 @@ class Clock:
 #clock1 = Clock()
 #clock2 = Clock()
 
-clocks = [ Clock() for i in range(1)]
+clocks = [ Clock() for i in range(2)]
 
 
 #command line args for testing.
