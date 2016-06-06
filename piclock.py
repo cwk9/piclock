@@ -65,7 +65,7 @@ clocks = [ Clock() for i in range(len(config.items('ALARMS')))]
 
 alcount = 0
 for cl in clocks:
-    cl.set_alarm(config['ALARMS'][str(alcount)].split(":")[0],config['ALARMS'][str(alcount)].split(":")[0])
+    cl.set_alarm(config['ALARMS'][str(alcount)].split(":")[0],config['ALARMS'][str(alcount)].split(":")[1])
     alcount = alcount + 1
     cl.run()
 
