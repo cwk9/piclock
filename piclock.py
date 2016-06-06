@@ -13,7 +13,6 @@ config.read('pyclock.conf')
 wavname = "alarm.wav"
 alarmwav = AudioSegment.from_wav(config['ALARMWAVS']['alwav'])
 
-
 def ring_ring():
     sys.stdout.write('ring ring\n')
     play(alarmwav)
@@ -57,17 +56,8 @@ class Clock:
 #Create our clock objects
 clocks = [ Clock() for i in range(len(config.items('ALARMS')))]
 
-#command line args for testing.
-#clock1.set_alarm(sys.argv[1], sys.argv[2])
-
-#clocks[0].set_alarm((config['ALARMS']['alarm1']).split(":")[0],(config['ALARMS']['alarm1']).split(":")[1])
-#clocks[1].set_alarm((config['ALARMS']['alarm2']).split(":")[0],(config['ALARMS']['alarm2']).split(":")[1])
-
 alcount = 0
 for cl in clocks:
     cl.set_alarm(config['ALARMS'][str(alcount)].split(":")[0],config['ALARMS'][str(alcount)].split(":")[1])
     alcount = alcount + 1
     cl.run()
-
-#clocks[0].run()
-#clocks[1].run()
