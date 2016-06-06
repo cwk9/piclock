@@ -54,14 +54,17 @@ class Clock:
         self._alarm_thread.daemon = True
         self._alarm_thread.start()
 
-clock1 = Clock()
-clock2 = Clock()
+#clock1 = Clock()
+#clock2 = Clock()
+
+clocks = [ Clock() for i in range(1)]
+
 
 #command line args for testing.
 #clock1.set_alarm(sys.argv[1], sys.argv[2])
 
-clock1.set_alarm((config['ALARMS']['alarm1']).split(":")[0],(config['ALARMS']['alarm1']).split(":")[1])
-clock2.set_alarm((config['ALARMS']['alarm2']).split(":")[0],(config['ALARMS']['alarm2']).split(":")[1])
+clocks[0].set_alarm((config['ALARMS']['alarm1']).split(":")[0],(config['ALARMS']['alarm1']).split(":")[1])
+clocks[1].set_alarm((config['ALARMS']['alarm2']).split(":")[0],(config['ALARMS']['alarm2']).split(":")[1])
 
-clock1.run()
-clock2.run()
+clocks[0].run()
+clocks[1].run()
