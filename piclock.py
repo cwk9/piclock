@@ -49,11 +49,12 @@ class Clock:
 clock1 = Clock()
 clock2 = Clock()
 
-clock1.set_alarm(sys.argv[1], sys.argv[2])
-clock2.set_alarm(sys.argv[3], sys.argv[4])
+#clock1.set_alarm(sys.argv[1], sys.argv[2])
+#clock2.set_alarm(sys.argv[3], sys.argv[4])
 
 #clock1.set_alarm(config['ALARMS']['alarm1'])
-print ((config['ALARMS']['alarm1']).split(":"))
+clock1.set_alarm((config['ALARMS']['alarm1']).split(":"))
+clock2.set_alarm((config['ALARMS']['alarm2']).split(":"))
 
 clock1.run()
 clock2.run()
