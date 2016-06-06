@@ -11,7 +11,7 @@ config.read('pyclock.conf')
 
 #Load alarm wave soudn
 wavname = "alarm.wav"
-alarmwav = AudioSegment.from_wav(config['ALARMSWAVS']['alwav'])
+alarmwav = AudioSegment.from_wav(config['ALARMWAVS']['alwav'])
 
 
 def ring_ring():
