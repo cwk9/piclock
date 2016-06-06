@@ -59,7 +59,6 @@ clock2 = Clock()
 
 #command line args for testing.
 #clock1.set_alarm(sys.argv[1], sys.argv[2])
-#clock2.set_alarm(sys.argv[3], sys.argv[4])
 
 clock1.set_alarm((config['ALARMS']['alarm1']).split(":")[0],(config['ALARMS']['alarm1']).split(":")[1])
 clock2.set_alarm((config['ALARMS']['alarm2']).split(":")[0],(config['ALARMS']['alarm2']).split(":")[1])
