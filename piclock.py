@@ -53,8 +53,8 @@ clock2 = Clock()
 #clock2.set_alarm(sys.argv[3], sys.argv[4])
 
 #clock1.set_alarm(config['ALARMS']['alarm1'])
-clock1.set_alarm((config['ALARMS']['alarm1']).split(":"))
-clock2.set_alarm((config['ALARMS']['alarm2']).split(":"))
+clock1.set_alarm((config['ALARMS']['alarm1']).split(":")[0],(config['ALARMS']['alarm1']).split(":")[1])
+clock2.set_alarm((config['ALARMS']['alarm2']).split(":")[0],(config['ALARMS']['alarm2']).split(":")[1])
 
 clock1.run()
 clock2.run()
