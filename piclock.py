@@ -2,13 +2,21 @@ import datetime
 import threading
 import sys
 import configparser
+from pydub import AudioSegment
+from pydub.playback import play
 
 #Read config file
 config = configparser.ConfigParser()
 config.read('pyclock.conf')
 
+#Load alarm wave soudn
+wavname = "alarm.wav"
+alarmwav = AudioSegment.from_wav(wavname)
+
+
 def ring_ring():
     sys.stdout.write('ring ring\n')
+    play(alarmwav)
     sys.stdout.flush()
 
 class Clock:
@@ -49,10 +57,10 @@ class Clock:
 clock1 = Clock()
 clock2 = Clock()
 
+#command line args for testing.
 #clock1.set_alarm(sys.argv[1], sys.argv[2])
 #clock2.set_alarm(sys.argv[3], sys.argv[4])
 
-#clock1.set_alarm(config['ALARMS']['alarm1'])
 clock1.set_alarm((config['ALARMS']['alarm1']).split(":")[0],(config['ALARMS']['alarm1']).split(":")[1])
 clock2.set_alarm((config['ALARMS']['alarm2']).split(":")[0],(config['ALARMS']['alarm2']).split(":")[1])
 
