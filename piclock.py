@@ -147,4 +147,5 @@ class Clock:
         self._alarm_thread.daemon = True
         self._alarm_thread.start()
 
+#Run the code.
 createclocks()
