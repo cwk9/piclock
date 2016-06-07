@@ -89,8 +89,11 @@ if ispi == 'yes':
                 time.sleep(1)  # slow down checking to one second
 
 #Load alarm wave sound
-wavname = "alarm.wav"
-alarmwav = AudioSegment.from_wav(config['ALARMWAVS']['alwav'])
+alarmwav = AudioSegment.from_wav(config['ALARMWAVS']['0'])
+alarmwavs = config['ALARMWAVS']
+for row in alarmwavs:
+    del row[0]
+print (alarmwavs)
 
 #What we do when an alarm is triggered
 def ring_ring():
