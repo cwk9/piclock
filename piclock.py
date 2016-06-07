@@ -4,7 +4,6 @@ import datetime
 import threading
 import sys
 import configparser
-import serial
 #pydub needs to be installed not in standard library.
 from pydub import AudioSegment
 from pydub.playback import play
@@ -17,9 +16,10 @@ config.read('pyclock.conf')
 ispi = config['IS_PI']['pi'] == 'no'
 if ispi == 'no':
     #import RPi.GPIO as GPIO
+    #import serial
     #GPIO.setmode(GPIO.BCM)
     #GPIO.setup(7, GPIO.IN)
-    port = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=3.0)
+    #port = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=3.0)
     lcdbacklight = "high"
     alarmstatus = "OFF"
     pastalarmstatus = "OFF"
