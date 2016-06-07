@@ -91,13 +91,7 @@ if ispi == 'yes':
 #Load alarm wave sound
 alarmwav = AudioSegment.from_wav(config['ALARMWAVS']['0'])
 alarmwavs_temp = config.items('ALARMWAVS')
-
-print (alarmwavs_temp.row[1])
-
-#alwavcount = 0
-#for alw in config.items('ALARMWAVS'):
-#    print (alw[alwavcount],[:])
-#    alwavcount = alwavcount + 1
+print ([row[1] for row in alarmwavs_temp])
 
 #What we do when an alarm is triggered
 def ring_ring():
