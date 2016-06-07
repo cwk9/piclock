@@ -13,8 +13,8 @@ config = configparser.ConfigParser()
 config.read('pyclock.conf')
 
 #
-ispi = config['IS_PI']['pi'] == 'no'
-if ispi == 'no':
+ispi = config['IS_PI']['pi']
+if ispi == 'yes':
     #import RPi.GPIO as GPIO
     #import serial
     #GPIO.setmode(GPIO.BCM)
