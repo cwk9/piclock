@@ -91,8 +91,9 @@ if ispi == 'yes':
 #Load alarm wave sound
 #alarmwav = AudioSegment.from_wav(config['ALARMWAVS']['0'])
 alarmwavs_temp = [row[1] for row in config.items('ALARMWAVS')]
+alarmwavs[]
 for alwv in alarmwavs_temp:
-    alarmwavs = AudioSegment.from_wav(alwv)
+    alarmwavs.append(AudioSegment.from_wav(alwv))
 
 play(alarmwavs[1])
 
