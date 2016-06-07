@@ -94,6 +94,8 @@ alarmwavs_temp = [row[1] for row in config.items('ALARMWAVS')]
 for alwv in alarmwavs_temp:
     alarmwavs = AudioSegment.from_wav(alwv)
 
+play(alarmwavs[0])
+
 #What we do when an alarm is triggered
 def ring_ring():
     sys.stdout.write('ring ring\n')
