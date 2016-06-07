@@ -1,6 +1,7 @@
 #Alarm clock for raspberry pi using serial display and a single switch.
 
 import datetime
+import time
 import threading
 import sys
 import configparser
@@ -12,19 +13,80 @@ from pydub.playback import play
 config = configparser.ConfigParser()
 config.read('pyclock.conf')
 
-#
+#Set Raspberry Pi related stuff
 ispi = config['IS_PI']['pi']
 if ispi == 'yes':
-    #import RPi.GPIO as GPIO
-    #import serial
-    #GPIO.setmode(GPIO.BCM)
-    #GPIO.setup(7, GPIO.IN)
-    #port = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=3.0)
+    import RPi.GPIO as GPIO
+    import serial
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(7, GPIO.IN)
+    port = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=3.0)
     lcdbacklight = "high"
     alarmstatus = "OFF"
     pastalarmstatus = "OFF"
 
-print (lcdbacklight)
+    #Clear screen function
+    def clearscr():
+        port.write('\xFE')
+        time.sleep(0.01)
+        port.write('\x01')
+        time.sleep(0.01)
+
+    #For sending custom LCD commands
+    def lcdcmd():
+        port.write('\xFE')
+        time.sleep(0.1)
+
+    #Function for setting the LCD brightness
+    def lcdbright(b):
+        if b == "off":
+            port.write('\x7C')
+            time.sleep(0.1)
+            port.write('\x80')
+            time.sleep(0.1)
+            print("lcd off")
+        if b == "high":
+            port.write('\x7C')
+            time.sleep(0.1)
+            port.write('\x9D')
+            print("lcd high")
+        if b == "medium":
+            port.write('\xFE')
+            time.sleep(0.1)
+            port.write('\x96')
+            print("lcd medium")
+        if b == "low":
+            port.write('\xFE')
+            time.sleep(0.1)
+            port.write('\x8C')
+        print("lcd low")
+
+    #Output text to the LCD screen.
+    def wrlcd(l, text):
+        if l == 1:
+            port.write('\xFE')
+            time.sleep(0.01)
+            port.write('\x80')
+            time.sleep(0.01)
+        elif l == 2:
+            port.write('\xFE')
+            time.sleep(0.01)
+            port.write('\xC0')
+            time.sleep(0.01)
+        else:
+            print("Error: line not selected")
+            port.write(text)
+            time.sleep(0.01)
+
+    #Check button and switch status
+    def checkinput():
+        global alarmstatus
+        while inlcdmenu == False:
+            if (GPIO.input(7)):
+                alarmstatus = "OFF"
+            else:
+                alarmstatus = "ON"
+                time.sleep(1)  # slow down checking to one second
 
 #Load alarm wave sound
 wavname = "alarm.wav"
