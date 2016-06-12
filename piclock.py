@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 #Alarm clock for raspberry pi using serial display and a single switch.
 
 import datetime
