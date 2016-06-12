@@ -6,8 +6,11 @@ import threading
 import sys
 import configparser
 #pydub needs to be installed not in standard library.
-from pydub import AudioSegment
-from pydub.playback import play
+try:
+    from pydub import AudioSegment
+    from pydub.playback import play
+except ImportError:
+    print ("Unable to import pydub. Please run setup.py to import missing libraries")
 
 #Read config file
 config = configparser.ConfigParser()
@@ -81,12 +84,11 @@ if ispi == 'yes':
     #Check button and switch status
     def checkinput():
         global alarmstatus
-        while inlcdmenu == False:
-            if (GPIO.input(7)):
-                alarmstatus = "OFF"
-            else:
-                alarmstatus = "ON"
-                time.sleep(1)  # slow down checking to one second
+        if (GPIO.input(7)):
+            alarmstatus = "OFF"
+        else:
+            alarmstatus = "ON"
+            time.sleep(1)  # slow down checking to one second
 
 #Load alarm wave sound
 #alarmwav = AudioSegment.from_wav(config['ALARMWAVS']['0'])
@@ -94,6 +96,7 @@ alarmwavs_temp = [row[1] for row in config.items('ALARMWAVS')]
 for alwv in alarmwavs_temp:
     alarmwavs = (AudioSegment.from_wav(alwv))
 
+#test sound. remove when not needed
 play(alarmwavs)
 
 #What we do when an alarm is triggered
